@@ -1,0 +1,53 @@
+= Setting up the development environment
+Akos Szirmai
+
+version: 0.1
+
+release date: 14 October 2026
+
+:toc:
+:sectnums:
+
+== Introduction
+
+This document describes the development environment which I've set up for the Personal Project of the Boot.dev's course. I wanted to establish a complete project with initiation, planning, execution and closure phases and to find the ideal tools for development and documentation also.
+After consulting with CoPilot, the following tools were selected:
+
+* uv - for virtual environment, which is needed because the project will rely on pygames, which need a specific version of python
+* git - for version control
+* GitHub - for version countrol Cloud repositpory
+* nvim - for editing simple files, including markdown
+* ZED - for editing source code and files more complex than a few lines
+* asciidoc - for editing nice-looking formatted documents, such as specifications, designs, etc.
+* PlantUML - for standalone UML diagrams
+* draw.io - for generic diagrams
+* Enterprise Architect - for complex UML and other similar models
+
+== Directory storage structure
+
+[source,text]
+----
+PQuest/
+├── src/
+├── resources
+├── tests/
+├── docs/
+│   ├── initiation/
+│   │   ├── dev_envir.adoc
+│   │   ├── idea_and_feasibility.adoc
+│   │   └── ...
+│   ├── design/
+│   │   ├── requirements.adoc
+│   │   ├── design.adoc
+│   │   └── ...
+│   └── development/
+├── README.adoc
+└── .gitignore
+----
+
+== Features
+
+* Tables
+* Diagrams
+* Cross references
+* PDF output
