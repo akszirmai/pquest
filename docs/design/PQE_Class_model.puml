@@ -1,0 +1,17 @@
+@startuml
+class Location
+class Gateway
+class Object
+class ObjectType
+class Player
+class ObjectLocation
+
+Location -- Gateway : to
+Location -- Gateway : from
+Object o-- ObjectType
+Location -- ObjectLocation
+ObjectLocation -- Object
+Player -- OwnedObject
+OwnedObject -- Object
+
+@enduml

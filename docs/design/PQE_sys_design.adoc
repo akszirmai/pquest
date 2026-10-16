@@ -1,0 +1,14 @@
+= System desing
+
+Akos Szirmai
+
+version: 0.1
+
+release date:
+
+== Introduction
+
+== Class model
+The following diagram illustrates the classes of the program:
+
+image::PQE_Class_model.png[]
