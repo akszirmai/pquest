@@ -1,0 +1,50 @@
+= Requirement Specification for the Personal Quest program
+
+Akos Szirmai
+
+version: 0.1
+
+release date:
+
+:toc:
+
+== Introduction
+This documents contains the description and requirements of the Personal Quest program, which is developed for the Boot.dev course as a personal project.
+
+
+== General description
+This program implements a Graphic point-and-click adventure game with simple features. The world of the game consists of several locations and the player can control and instruct a main character within this world.
+There will be pre-rendered locations and various objects at the locations.
+
+== Implementation approach
+Since the actual development of a complete game needs much more time than what is recommended for the personal project, the envisaged functionality will be assigned to different development phases. The goal of the initial assignment is to develop a Minimal Viable Product (MVP), which will include only the first 1 or 2 of such function groups.
+
+== Functional specification
+
+=== High level functions
+The following list describes the major user functions of the program:
+
+* Start, load, save and games.
+* Display one location, which is a pre-generated image, its objects and the main character.
+* Move the main character around in one location, with consideration to restrictions (boundaries of the location, objects, other characters).
+* Move the main character to another location through doors, corridors or similar gateways.
+* Pick an object from the current location into the main character's inventory if it is can be picked and not too heavy.
+* Drop an object from the inventory if there is enough space around the main character
+* Use an object in the inventory to an object in the location if the player is close enough to it
+
+The use cases are illustrated on the next diagram:
+
+image::generated/PQU_UseCase_model.png[]
+
+=== The functional requirements
+The functional requirements are derived from the use cases, and the necessary system functions, such as for example the "Display current location" function are also added.
+The functional requirements are the following:
+
+.Requirements
+[cols="7%,4%,4%,25%,^10%,^10%,40%"]
+|===
+^|Req 3+|Function ^|Priority ^|Phase |Description
+
+include::generated/PQU_requirement_list.adoc[]
+
+|===

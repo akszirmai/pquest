@@ -123,6 +123,7 @@
 <node TEXT="certain objects by default" ID="ID_64178817" CREATED="1792134358236" MODIFIED="1792134370606"/>
 </node>
 <node TEXT="Moving other (optional) characters" ID="ID_423642101" CREATED="1792134375055" MODIFIED="1792134396536"/>
+<node TEXT="Objects when changing their state (for example a bathtube is filled with water)" ID="ID_1969397069" CREATED="1792360811172" MODIFIED="1792360859938"/>
 </node>
 <node TEXT="Certain items can be interacted" ID="ID_593360666" CREATED="1792106411320" MODIFIED="1792106913015" HGAP_QUANTITY="23 pt">
 <cloud COLOR="#f0f0f0" SHAPE="RECT"/>

@@ -1,0 +1,48 @@
+FN1, FN2, FN3, Priority, Phase, "Description"
+Game initiation and persistence,,,high,N/A,"The player can start, save and load a game."
+,Start a new game,,high,1,The player can start a new game with an option to save the current game at first.
+,Load a game,,high,2,The player can load a previously saved game with the option to save the current game at first.
+,Save a game,,high,2,The player can save the current game. The save can overwrite an existing save or can be a completely new one.
+,Automatic savefile naming,,high,2,"The system will define and use the physical file names for saves, the user may give a short savename only."
+Display the current location,,,high,1,The system draws the current location together with its objects.
+,Display the location background,,high,1,The system loads and draws the background location image.
+,Display the location objects,,high,1,The system loads and draws the objects images of the objects of the current location.
+,Display the player,high,,1,The system draws the main character at the current location at its position and orientation.
+,,Display the player's orientation,high,1,The system loads and draws the image corresponding to the orientation of the main character.
+,Highlight the location's special elements,,med,2,
+,Quit the game,,high,1,The player can quit a game with optionally saving it before quitting.
+,,Check changes since last save,med,2,The system should check if the game status was changed since the last save and offer save in that case only.
+Move character within the current location,,,high,1,The player may move the main character within the current location.
+,Movement types,,high,1,
+,,Move left,high,1,The player may move the main character to the left
+,,Move right,high,1,The player may move the main character to the right
+,,Move backward,high,1,The player may move the main character to the backward direction (up on the screen)
+,,Move forward,high,1,The player may move the main character to the forward direction (down on the screen)
+,,Block character movement,high,1,"The movement must stop at blocking items such as walls, other objects or characters"
+,,Move diagonally,med,3,"The player may move the main character diagonally (up-left, up-right, down-left, down-right)"
+Move character between locations,,,high,2,
+,Keep track of adjacency,,high,2,"The system should manage adjacent locations and the exact places to move through"
+,Move to an adjacent location,,high,2,"The player may move the main character to an adjacent location, provided there is a gateway between them"
+,,Move to an adjacent location through an edge,high,2,"The player moves to the other location by crossing the edge at a suitable place"
+,,Move to an adjacent location through a gateway,high,2,"The player moves to the other loction by activating an object (e.g. a door)"
+,Load adjacent location and place player,,high,2,"The system should load the other location and position the main character"
+Manage objects,,,high,2,
+,Keep track of objects,,high,2,"The system should keep track of the features of the various objects, including their current position"
+,Objects features,,high,2,"The objects should have a weight, areasize, image(s), state, location attributes"
+,Flexible attributes,,low,4,"The system should allow the description of objects and their attributes in resource files instead of hard-coding"
+,Pick an object,,high,2,"The user can try picking an object it they are in the object's vicinity. The attempt is successful if the object is not too heavy and there is place in the inventory"
+,Drop an object,,med,3,"The user drops an object at their current location and direction where they face, provided there is enough space there"
+,Display inventory,,high,N/A,
+,,Display inventory slots and items,high,2,"Display inventory slots and objects occupying the given slots"
+,,Select an inventory object,high,2,"The player can select an object from the inventory. By doing so, the object become active."
+,,Display atributes of an object,med,3,"The system should display the features of the selected active object"
+,Combine objects,,med,3,"The player can select 2 objects in their inventory and try to combine them to obtain a combined object"
+,Push an object,,low,4,"The player pushes and object"
+,,Move pushed object,low,4,"The system moves the object into the pushing direction until the conditions hold"
+,,Block pushed objects,low,4,"Stop pushing an object if an obstacle (wall, another object, another character) is ahead"
+,Pull an object,,low,4,"The player pulls and object"
+,,Move pulled object,low,4,"The system moves the object into the pilling direction until the conditions hold"
+General requirements,,,high,N/A,Miscellaneous system requirements
+,Program control,,,,
+,,Keyboard control,high,1,The player should be able to access every function of the system with the keyboard
+,,Mouse control,low,4,The player should be able to access every function of the system with the Mouse

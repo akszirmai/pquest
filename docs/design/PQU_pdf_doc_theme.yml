@@ -1,0 +1,24 @@
+extends: default
+
+base:
+  font-size: 10
+
+table:
+  font-size: 8
+
+table-head:
+  background-color: 29bfe8
+
+role:
+  phase-1:
+    font-color: 19a63a
+    font-size: 12
+  phase-2:
+    font-color: c6f561
+    font-size: 12
+  phase-3:
+    font-color: e6e80f
+    font-size: 12
+  phase-4:
+    font-color: e8b007
+    font-size: 12

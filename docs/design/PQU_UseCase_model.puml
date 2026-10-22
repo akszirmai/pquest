@@ -1,0 +1,70 @@
+@startuml
+
+left to right direction
+
+actor Player
+together {
+    usecase "Start new game" as Start
+    usecase "Move character \nwithin a location" as MovInLoc
+    usecase "Move character to \nan adjacent location" as MovAdjLoc
+}
+
+together {
+    usecase "Pick an object" as PickObj
+    usecase "Interact with an object" as IntrObj
+    usecase "Push object" as PushObj
+    usecase "Pull object" as PullObj
+    usecase "Talk with an NPC" as TalkNPC
+    usecase "Attack NPC" as AtkNPC
+}
+
+usecase "Check object in \ninventory" as ChkInv
+usecase "Drop an object" as DropObj
+usecase "Combine objects" as CombObj
+usecase "Open inventory" as OpenInv
+usecase "Save game" as Save
+usecase "Load game" as Load
+usecase "Select save slot" as SelSlot
+usecase "Use an object" as UseObj
+usecase "Select location's object" as SelObj
+usecase "Fight with NPC" as FightNPC
+
+Player -- Start
+Player -- MovInLoc
+Player -- MovAdjLoc
+Player -- PickObj
+Player -- ChkInv
+Player -- DropObj
+Player -- UseObj
+Player -- CombObj
+Player -- PushObj
+Player -- PullObj
+Player --- AtkNPC
+Player -- FightNPC
+Player -- Save
+Player -- Load
+OpenInv .up-> DropObj : include
+OpenInv .up-> ChkInv : include
+OpenInv .up-> UseObj : include
+OpenInv .up-> CombObj : include
+SelSlot .up-> Save : include
+SelSlot .up-> Load : include
+Player -- TalkNPC
+
+Player -- IntrObj
+SelObj .up-> PickObj : include
+SelObj .up-> IntrObj : include
+SelObj .up-> TalkNPC : include
+SelObj .up-> PushObj : include
+SelObj .up-> PullObj : include
+SelObj .up-> AtkNPC : include
+FightNPC .up-> AtkNPC : include
+
+' The following hidden lines try forcing an order among the use cases.'
+
+PullObj -[hidden]- FightNPC
+FightNPC -down[hidden]- AtkNPC
+Start -up[hidden]- MovInLoc
+MovAdjLoc -[hidden]- FightNPC
+
+@enduml
