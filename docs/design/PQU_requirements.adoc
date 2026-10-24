@@ -2,9 +2,9 @@
 
 Akos Szirmai
 
-version: 0.1
+version: 1.0
 
-release date:
+release date: 24 October 2026
 
 :toc:
 

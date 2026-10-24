@@ -1,4 +1,6 @@
-= System desing
+:imagesdir: ./generated
+
+= System design
 
 Akos Szirmai
 
@@ -8,7 +10,56 @@ release date:
 
 == Introduction
 
+The _"Requirements Specification for the Personal Quest program"_ document contains the desired functionality of the program.
+
+== Design principles
+The following design principles characterise the program:
+
+* Locations are defined by JSON files, which contain the reference to the background image, the initial objects,
+* The view of the system is axonometric from a fixed viewpoint.
+
+== Logical design model
+
+The game will implement several objects of different kind and their common unified behaviour will determine the possibilities.
+
+=== The following objects
+
 == Class model
 The following diagram illustrates the classes of the program:
 
-image::PQE_Class_model.png[]
+image::PQU_class_model.png[]
+
+The properties and capabilities of the objects are the following:
+
+.Location features
+[cols="35%,65%"]
+|===
+^|Feature ^|Description
+
+2+|*Properties*
+
+|dimensions  |The shape and dimensions of the location. In the MVP, the locations have a rectangular shape.
+
+2+|*Capabilities*
+
+|display location |The system draws the location together with all objects in it.
+|highlight objects |All objects of the location are highlighted if a given hotkey is pressed.
+|confine movement |The system has boundaries which prohibit the charaters moving outside of the boundaries
+|===
+
+
+== Physical design model
+
+=== Implementation environment
+Since the program relies heavily on graphics and other game related features, it will use the Pygame module. The Pygame module supports only Python 3.13 version, therefore a virtual environment will be established for the development relying on the [.underline]#uv# package manager.
+
+The setup command is the following: +
+`uv init --no-package --python 3.13 pquest` +
+`cd pquest` +
+`uv venv` +
+`uv add pygame==2.6.1`
+
+Each time I continue the development, the +
+`source ./venv/bin/activate` +
+command needs to be run to activate the virtual environment. The developed programme can run by +
+`uv run -m XXXXXXXXX`

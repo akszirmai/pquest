@@ -1,10 +1,12 @@
 FN1, FN2, FN3, Priority, Phase, "Description"
-Game initiation and persistence,,,high,N/A,"The player can start, save and load a game."
+Game initiation and persistence,,,high,,"The player can start, save and load a game."
 ,Start a new game,,high,1,The player can start a new game with an option to save the current game at first.
 ,Load a game,,high,2,The player can load a previously saved game with the option to save the current game at first.
 ,Save a game,,high,2,The player can save the current game. The save can overwrite an existing save or can be a completely new one.
 ,Automatic savefile naming,,high,2,"The system will define and use the physical file names for saves, the user may give a short savename only."
 Display the current location,,,high,1,The system draws the current location together with its objects.
+''Handle rectangular locations,,high,1,"The system handles rectangular locations, with walls parallel to the grid"
+''Handle non-rectangular locations,,low, 4,"The system handles locations, with non-rectangular polygonal shapes"
 ,Display the location background,,high,1,The system loads and draws the background location image.
 ,Display the location objects,,high,1,The system loads and draws the objects images of the objects of the current location.
 ,Display the player,high,,1,The system draws the main character at the current location at its position and orientation.
@@ -42,7 +44,13 @@ Manage objects,,,high,2,
 ,,Block pushed objects,low,4,"Stop pushing an object if an obstacle (wall, another object, another character) is ahead"
 ,Pull an object,,low,4,"The player pulls and object"
 ,,Move pulled object,low,4,"The system moves the object into the pilling direction until the conditions hold"
-General requirements,,,high,N/A,Miscellaneous system requirements
+Interactions with other characters,,,med,,
+,Talk with an NPC,,med,,
+,,Initiate a discussion with an NPC,med,4,"The player initiate a talk with an NPC in their vicinity"
+,,Initiate a discussion with the player character,med,4,"One NPC in the vicinity of the main characrter initiates a talk with him"
+,,Conduct a conversation,med,4,"The player select sentences from a predefined list and receives adequate reaction"
+,,Handle conversation,med,4,"At each conversation sentence, the system may initiate a change, give an object or start another action"
+General requirements,,,high,,Miscellaneous system requirements
 ,Program control,,,,
 ,,Keyboard control,high,1,The player should be able to access every function of the system with the keyboard
 ,,Mouse control,low,4,The player should be able to access every function of the system with the Mouse

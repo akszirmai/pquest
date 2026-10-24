@@ -1,0 +1,39 @@
+@startuml
+
+class Location
+class Gateway
+class Combination
+class Object
+class ObjectType
+class Character
+together {
+  class Player
+  class Conversation #lightcyan
+  class NPC
+}
+
+Combination "0..1" -down-{ "2" ObjectType : ingredient type
+Combination "0..*" -down- "1" ObjectType : result type
+ObjectType "1" -r-{ "0..*" Object : instance of
+Object "0..*" }-- "0..1" Location : located at
+
+Player --|> Character
+NPC --|> Character
+
+Object "0..*" }-- "0..1" Character : holds
+
+'Object "0..*" }-- "0..1" Player : holds
+'
+'Object "0..*" }-- "0..1" NPC : holds
+'
+
+Location "1" -- "0..1" Player : stays at
+Location "0..1" --{ "0..*" NPC : stays at
+Location "2" }-left- "1" Gateway : connnects
+Player -r- Conversation : carries on
+Conversation -r- NPC : carries on
+
+note "xor - object is at one place, either a location or a character" as N1
+Object .. N1
+
+@enduml
