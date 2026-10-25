@@ -62,4 +62,4 @@ The setup command is the following: +
 Each time I continue the development, the +
 `source ./venv/bin/activate` +
 command needs to be run to activate the virtual environment. The developed programme can run by +
-`uv run -m XXXXXXXXX`
+`uv run main.py`

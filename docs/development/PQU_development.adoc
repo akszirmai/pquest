@@ -1,0 +1,95 @@
+= System design
+
+Akos Szirmai
+
+version: 0.1
+
+release date:
+
+== Introduction
+
+The document contains the decisions made during the developemnt process and the various -- mostly language-related -- pitfalls and tricks.
+
+
+== Tricks
+
+=== Exception handling
+
+==== How  to find the type of a caught Exception?
+If a function from a module raises an exception and the documentation does not tell what kind of Exceptions may occur, then the following code can print the type and the additional arguments:
+
+[source,python]
+----
+template = "Outer: An Exception of type {0} occurred. Arguments:\n{1!r}"
+message = template.format(type(ex).__name__, ex.args)
+print(message)
+----
+
+==== How to handle the situation when a constructor encounters an error and the object is not properly created?
+There may be situations when a constructor fails, for example when an image file for the new object cannot be loaded.
+Constructors can never have a return value other than the object they created, therefore other ways are needed to communicate that the constructor failed.
+
+*Option 1 (Raise exception in the constructor)* +
+In case of failed initiation, the `__init__` constructor may raise a clean, meaningful exception, for example:
+
+[source,python]
+----
+raise ValueError(f"Failed to create the object of type MyObject + <Additional info if needed>")`
+----
+
+in the external caller function the following lines handle:
+
+[source,python]
+----
+try:
+    obj = MyObject()
+except ValueError as ex:
+    <Do whatever is needed if creation fails>
+----
+
+*Option 2 (Flag the object as invalid)* +
+In case of failed initiation, a validity flag is set to False within the `__init__` constructor:
+
+[source,python]
+----
+if <creation is OK>:
+    self.is_valid = True
+else:
+    self.is_valid = False
+----
+
+in the external caller function:
+
+[source,python]
+----
+obj = MyObject()
+if not obj.is_valid:
+    <do whatever is needed if creation fails>
+----
+
+*Option 3 (Use a Factory to create the object and it may have a return value)* +
+In this case, the constructor is not directly called in the external caller function. Instead a Factory method is called which may return `None` if the initiation failed.
+
+[source,python]
+----
+class MyObject:
+    def __init__(self, <additional data>)
+        <initialise the object with additional data>  # This will be called only if the Factory creation was successful
+
+    @classmethod
+    def factory_to_create_MyObject(cls)
+        <creation steps>
+        if <creation was successful>:
+            return cls(<additional data> )            # This line calls the __init__ constructor and returns the created object
+        else:
+            return None                               # Return None to the caller if the creation failed
+----
+
+in the external caller function:
+
+[source,python]
+----
+obj = MyObject()
+if obj is None:
+    <do whatever is needed if creation fails>
+----

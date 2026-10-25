@@ -24,6 +24,7 @@ usecase "Combine objects" as CombObj
 usecase "Open inventory" as OpenInv
 usecase "Save game" as Save
 usecase "Load game" as Load
+usecase "Delete game" as Delete
 usecase "Select save slot" as SelSlot
 usecase "Use an object" as UseObj
 usecase "Select location's object" as SelObj
@@ -43,6 +44,7 @@ Player --- AtkNPC
 Player -- FightNPC
 Player -- Save
 Player -- Load
+Player -- Delete
 OpenInv .up-> DropObj : include
 OpenInv .up-> ChkInv : include
 OpenInv .up-> UseObj : include
