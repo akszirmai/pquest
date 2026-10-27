@@ -1,6 +1,5 @@
-:imagesdir: ./generated
-
 = System design
+:stem: latexmath
 
 Akos Szirmai
 
@@ -27,7 +26,7 @@ The game will implement several objects of different kind and their common unifi
 == Class model
 The following diagram illustrates the classes of the program:
 
-image::PQU_class_model.png[]
+image::generated/PQU_class_model.png[]
 
 The properties and capabilities of the objects are the following:
 
@@ -47,19 +46,42 @@ The properties and capabilities of the objects are the following:
 |confine movement |The system has boundaries which prohibit the charaters moving outside of the boundaries
 |===
 
+*display location* +
+The locations are static 3D images, designed and rendered by Blender. They are shown from slightly above and tilted, therefore room edges are not simply horizontal or vertical but a bit tiled as well. The floor, which has a rectangular shape in real word, having edges parallel with the coordinate axes, is a rendered to a quadrilateral, whose opposing edges are not even parallel to each other.
+
+Then, the problem is the following:
+Let the 3D coordinates of the room's floor be: stem:[(x_1, y_1, 0), (x_2, y_1, 0), (x_2, y_2, 0), \text{and} \quad (x_1, y_2, 0)]
+and let the rendered 2D coordinates of these points to the screen be: +
+[stem]
+++++
+(f_{x_1}, f_{y_1}), (f_{x_2}, f_{y_2}), (f_{x_3}, f_{y_3}), \quad \text{and} \quad (f_{x_4}, f_{y_4})
+++++
+It is known (*source*), that the mapping of the 3D points to the 2D screen is a projective transformation, and let this transformation, in case of the points lying on the floor, denoted by: +
+[stem]
+++++
+T_{floor}: (x, y)\to (s_x, s_y)
+++++
+
 
 == Physical design model
 
 === Implementation environment
 Since the program relies heavily on graphics and other game related features, it will use the Pygame module. The Pygame module supports only Python 3.13 version, therefore a virtual environment will be established for the development relying on the [.underline]#uv# package manager.
 
+
 The setup command is the following: +
-`uv init --no-package --python 3.13 pquest` +
-`cd pquest` +
-`uv venv` +
-`uv add pygame==2.6.1`
+----
+uv init --no-package --python 3.13 pquest
+cd pquest
+uv venv
+uv add pygame==2.6.1
+----
 
 Each time I continue the development, the +
-`source ./venv/bin/activate` +
+----
+source ./venv/bin/activate
+----
 command needs to be run to activate the virtual environment. The developed programme can run by +
-`uv run main.py`
+----
+uv run main.py
+----

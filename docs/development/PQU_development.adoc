@@ -1,4 +1,5 @@
-= System design
+= System development tricks and lessons learnt
+:sectnums:
 
 Akos Szirmai
 
@@ -6,12 +7,61 @@ version: 0.1
 
 release date:
 
+:toc:
+:toclevels: 3
+
 == Introduction
 
 The document contains the decisions made during the developemnt process and the various -- mostly language-related -- pitfalls and tricks.
 
 
 == Tricks
+
+
+=== Language glitches and false alarms by the Python lintner
+
+The language checking server within ZED  (`basedpyright` or `pyright`) marks seveveral correct code lines as suspicious or even incorrect. Although it is not a goal to produce code without any warnings, it is good to know which might indicate real problems and which are not. This section illustrates some of them and the solution to avoid them.
+
+==== Unrecognised modules in the virtual environment
+
+[source,python]
+----
+import pygame
+----
+
+This import cannot be resolved, possibly since the language server looks for the standard modules python installation and not for the modules of the virtual environment.
+
+*Solution:* The `pyright` should be instructed to look for the virtual environment (Which in turn has a correct reference to the "missing" pygame module.)
+This is done by creating a `pyrightconfig.json` file in the root of the project, with the following content:
+
+[source,json]
+----
+{
+  "venvPath": ".",
+  "venv": ".venv"
+}
+----
+
+==== Warning about implicitly relative imports
+
+[source,python]
+----
+from constants import SCREEN_WIDTH
+----
+
+The language server marked it as an error, since the project root is the `pquest` directory and not the `pquest/src` where all source files really reside. Consequently, if the main program were imported, or used as a library, contrary to using it as a standalonne program, then Python would not find the `contstants` module, because it is not in the project root. +
+*Solution:* There are multiple possiblities, but the standard approach is to instruct Python to regard the `src` directory as the package root. This can be achieved if an empty file with the name `\_\_init\_\_.py` is saved in the `src` directory. If Python finds such a file, then it will regard the `src` directory as a module named `src`. Afterwards, the inputs should be modified as:
+
+[source,python]
+----
+from src.constants import SCREEN_WIDTH
+----
+
+Finally, it alters the way how the proram is run to: +
+----
+`uv run python -m src.main`
+----
+
 
 === Exception handling
 
@@ -92,4 +142,99 @@ in the external caller function:
 obj = MyObject()
 if obj is None:
     <do whatever is needed if creation fails>
+----
+
+=== Documentation and other scripts
+
+==== Sensitivity of shell scripts to relative paths
+
+Several scripts were created to easy repetitive every day tasks such as compiling documentation. These scripts call python programmes to convert requirement lists into formatted Asciidoc tables, `plantuml` to generate various diagrams and `asciidoctor-pdf` to render the documents. Meanwhile, the scrips may move generated files into the `docs/generated/` directory to easily exclude them from the `.git` inventory. To have a uniform approach, these scripts were transfered to the project root. what led to a practical problem. At some steps of the scripts, the acting programmes did not see some of their inputs, since a relative path was used before.
+
+*Solution:* Within the script an absolute path to the project root was defined.
+
+----
+PPATH="$HOME/mystuff/workspace/python/pquest"
+java -jar ~/bin/plantuml-1.2026.8.jar "$PPATH"/docs/design/PQU_UseCase_model.puml
+...
+----
+
+Moreover, `asciidoctor-pdf` used a relative addressing for the inluded files, such as:
+
+[literal]
+----
+ include::generated/PQU_requirement_list.adoc[]
+----
+
+which intended to take the PQU_requirement_list.adoc file from a subdirectory in the same directory as the host .adoc file was. Unfortunately, when asciidoctor-pdf is called in a script residing in another directory, then the Current Working Directory (CWD) is the directory of the script and the relative paths are calculated from this CWD.
+
+*Solution:* Asciidoctor-pds must be instructed to handle the given document's directory (`doc/design`) as the root, with the switch `-B` as follows:
+
+----
+asciidoctor-pdf -B docs/design -a pdf-themesdir="$PPATH"/docs/ -a pdf-theme=PQU_pdf_doc_theme.yml "$PPATH"/docs/design/PQU_requirements.adoc
+----
+
+The above example, shows another directive: `-a pdf-themesdir="$PPATH"/docs/` instructs asciidoctor-pdf to load the given document theme YAML file from the specified directory.
+
+
+==== Acessing files in other folders by explorer.exe
+
+`Explorer.exe` is a windows application to invoke for example PDF-viewer or PNG-viewer. When used in scripts, it does not recognise Linux paths, since the path-segment delimiters are different in Linux (`\`) and in Windows (`/`).
+
+*Solution:* In Linux scripts, the paths should be wrapped in the following way:
+
+----
+PDF_PATH="$PPATH"/docs/design/generated/PQU_requirements.pdf
+explorer.exe "$(wslpath -w "$PDF_PATH")"
+----
+
+==== Enabling mathematical formulas in AsciiDoc documents
+
+The document editing program AsciiDoc supports the usage of mathematical formulas, but in practice it provides a placeholder for the formulae and calls an external formula-renderer which in turn create .png files to be inserted automatically. There are more formula-renderers, but they need to be installed and set up separately, since they are not part of the base asciidoc package.
+
+Asciidoctor documentation describes that the recommended formula-renderer is Asciidoctor Mathematical (There is an alternative: MathJax - but I did not manage to properly install it and set it up.). This is a Ruby gem what is possibly an independently usable ruby-language program.
+
+Asciidoctor Mathematical can be installed from .GitHub (https://github.com/asciidoctor-contrib/asciidoctor-mathematical).
+Asciidoctor Mathematical is no longer maintained, so it recommends a switch to MathJax, but at the moment this will be enoug.
+The installation of Asciidoctor Mathematical has some prerequisites:
+
+To have ruby installed with +
+----
+sudo apt update
+sudo apt install ruby-dev build-essential
+----
+
+Next install some listed dependencies +
+----
+sudo apt install \
+  bison \
+  flex \
+  libffi-dev \
+  libxml2-dev \
+  libgdk-pixbuf-2.0-dev \
+  libcairo2-dev \
+  libpango1.0-dev \
+  fonts-lyx \
+  cmake \
+  libzstd-dev \
+  libwebp-dev
+----
+The last 2 is possibly not necessary.
+
+
+Next, install the Ruby gem itself.
+----
+CMAKE_POLICY_VERSION_MINIMUM=3.5
+gem install asciidoctor-mathematical
+----
+
+Finally the complilation of a simple test.adoc document is:
+
+----
+asciidoctor-pdf -r asciidoctor-mathematical your-doc.adoc
+----
+
+Within the complex script of compiling asciidoc documents, I needed to switch to absolute paths and now the compilation command is the following:
+
+----
+asciidoctor-pdf -r asciidoctor-mathematical -B "$(realpath "$DOCPATH")" -a imagesoutdir="$(realpath "$DOCPATH")" -a pdf-themesdir="$PPATH"/docs/ -a pdf-theme=PQU_pdf_doc_theme.yml "$DOCPATH"/PQU_sys_design.adoc
 ----

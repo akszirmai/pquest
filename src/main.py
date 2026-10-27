@@ -1,7 +1,8 @@
 import pygame
 
-from constants import SCREEN_HEIGHT, SCREEN_WIDTH
-from location import Location
+from src.constants import SCREEN_HEIGHT, SCREEN_WIDTH
+from src.location import Location
+from src.logger import log_event, log_state
 
 
 def main():
@@ -14,17 +15,20 @@ def main():
 
     try:
         location = Location(1, "./resource/Location_1.png")
+        log_event("Location loaded")
     except ValueError as ex:
         print("Location is not created. Abort the program.")
+        log_event(f"Location {1} loading failed")
         return
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     while True:
+        log_state()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
 
-        screen.fill("black")
+        _ = screen.fill("black")
         location.draw(screen)
         pygame.display.flip()
 

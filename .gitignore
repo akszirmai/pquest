@@ -3,3 +3,13 @@
 *.xmind
 *.png
 generated/
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/

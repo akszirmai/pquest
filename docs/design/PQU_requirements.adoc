@@ -1,4 +1,5 @@
 = Requirement Specification for the Personal Quest program
+:sectnums:
 
 Akos Szirmai
 
@@ -36,6 +37,7 @@ The use cases are illustrated on the next diagram:
 
 image::generated/PQU_UseCase_model.png[]
 
+
 === The functional requirements
 The functional requirements are derived from the use cases, and the necessary system functions, such as for example the "Display current location" function are also added.
 The functional requirements are the following:
@@ -43,7 +45,7 @@ The functional requirements are the following:
 .Requirements
 [cols="7%,4%,4%,25%,^10%,^10%,40%"]
 |===
-^|Req 3+|Function ^|Priority ^|Phase |Description
+|Req 3+|Function ^|Priority ^|Phase |Description
 
 include::generated/PQU_requirement_list.adoc[]
 

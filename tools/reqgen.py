@@ -29,7 +29,7 @@ def generate_req_table(filename : str) -> None:
                 continue                       # To skip the header line
             if len(line) != 6:
                 raise Exception(f"Input file has not 6 items in row: {row_num}")
-            asc_row = "|"
+            asc_row = ".^|"
             phase_col : str
             if line[4] in {"1", "2", "3", "4"}:
                 phase_col = f"^.^|[.phase-{line[4]}]##■  ## {line[4]}"            # Add a coloured square before the phase number

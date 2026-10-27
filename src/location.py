@@ -1,4 +1,5 @@
 import pygame
+from pygame.rect import Rect
 
 
 class Location:
@@ -7,6 +8,7 @@ class Location:
         self.id = id
         self.loc_img_path = loc_img_path
         self.loc_img : pygame.Surface
+        self.imagerect : Rect
         print(f"Try loading image file from: {self.loc_img_path}")
 
         load_res : int = self.load_image(self.loc_img_path)
