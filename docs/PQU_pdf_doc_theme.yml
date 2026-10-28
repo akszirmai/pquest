@@ -3,6 +3,10 @@ extends: default
 base:
   font-size: 10
 
+code:
+  font_size: 9           # Lowers the font size (default is usually 10-11)
+  line_spacing: 1.0      # Tightens the line distance
+
 table:
   font-size: 8
 

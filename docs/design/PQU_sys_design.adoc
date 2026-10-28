@@ -1,5 +1,6 @@
 = System design
 :stem: latexmath
+:source-highlighter:
 
 Akos Szirmai
 
@@ -40,11 +41,97 @@ The properties and capabilities of the objects are the following:
 |dimensions  |The shape and dimensions of the location. In the MVP, the locations have a rectangular shape.
 
 2+|*Capabilities*
-
+|load location data |The system loads the location data from file
 |display location |The system draws the location together with all objects in it.
 |highlight objects |All objects of the location are highlighted if a given hotkey is pressed.
 |confine movement |The system has boundaries which prohibit the charaters moving outside of the boundaries
 |===
+
+=== Location definition
+
+*load location data* +
+Location information is stored in a single file of JSON format. This file is the *Game descriptor file*. The format should be flexible in a sense that later further information types and content may be added. The location data represents the game environment at the beginning of the game, as the game proceeds, the environment may change, and be saved and reloaded, but the original location description files never change.
+The following objects are in the Game descriptor file
+
+* locations and their connections
+* objects at the locations
+* NPC-s at the locations
+
+[source,json]
+----
+{
+  "locations": [
+    {
+      "ID": 1,
+      "name": "Entranceway",
+      "corners" {
+        "LL": {
+          "x": -20,
+          "y": -10
+        },
+        "LR": {
+          "x": -20,
+          "y": -10
+        },
+        "UR": {
+          "x": -20,
+          "y": 10
+        },
+        "UL": {
+          "x": -20,
+          "y": 10
+        }
+      },
+      "image name": "Location_1.png",
+      "exits": [
+        {
+          "exit_no": 1,
+          "corners" {
+            "LL": {
+              "x": -20,
+              "y": -10
+            },
+            "LR": {
+              "x": -20,
+              "y": -10
+            },
+            "UR": {
+              "x": -20,
+              "y": 10
+            },
+            "UL": {
+              "x": -20,
+              "y": 10
+            }
+        }
+      ],
+
+    },
+    {
+    "ID": 1,
+    "name": "Entranceway",
+    .
+    .
+    .
+    }
+
+    }
+  ],
+
+  "gateways": [
+    {
+      "loc1_ID": 1,
+      "loc2_ID" : 2,
+      "transition type": null
+    },
+    {
+      "loc1_ID": 1,
+      "loc2_ID" : 2,
+      "transition type": null
+    }
+  ]
+}
+----
 
 *display location* +
 The locations are static 3D images, designed and rendered by Blender. They are shown from slightly above and tilted, therefore room edges are not simply horizontal or vertical but a bit tiled as well. The floor, which has a rectangular shape in real word, having edges parallel with the coordinate axes, is a rendered to a quadrilateral, whose opposing edges are not even parallel to each other.
@@ -56,7 +143,7 @@ and let the rendered 2D coordinates of these points to the screen be: +
 ++++
 (f_{x_1}, f_{y_1}), (f_{x_2}, f_{y_2}), (f_{x_3}, f_{y_3}), \quad \text{and} \quad (f_{x_4}, f_{y_4})
 ++++
-It is known (*source*), that the mapping of the 3D points to the 2D screen is a projective transformation, and let this transformation, in case of the points lying on the floor, denoted by: +
+It is known (*source*), that the mapping of the 3D points to the 2D screen is a projectile transformation, and let this transformation, in case of the points lying on the floor, denoted by: +
 [stem]
 ++++
 T_{floor}: (x, y)\to (s_x, s_y)
