@@ -1,0 +1,56 @@
+{
+  "locations": [
+    {
+      "ID": 1,
+      "name": "Entranceway",
+      "corners": {
+        "LL": {"x": -2.0, "y": -4.0},
+        "LR": {"x": 2.0, "y": -4.0},
+        "UR": {"x": 2.0, "y": 4.0},
+        "UL": {"x": -2.0,"y": 4.0}
+      },
+      "image name": "Location_1.png",
+      "exits": [
+        {
+          "exit_no": 1,
+          "corners": {
+            "LL": {"x": -2.0, "y": -0.5},
+            "LR": {"x": -1.5, "y": -0.5},
+            "UR": {"x": -1.5, "y": 0.5},
+            "UL": {"x": -2.0, "y": 0.5}
+          }
+        }
+      ]
+    },
+    {
+      "ID": 2,
+      "name": "Livingroom",
+      "corners": {
+        "LL": {"x": -8.0, "y": -4.0},
+        "LR": {"x": -2.0, "y": -4.0},
+        "UR": {"x": -2.0, "y": 6.0},
+        "UL": {"x": -8.0,"y": 6.0}
+      },
+      "image name": "Location_1.png",
+      "exits": [
+        {
+          "exit_no": 1,
+          "corners": {
+            "LL": {"x": -2.5, "y": -0.5},
+            "LR": {"x": -2.0, "y": -0.5},
+            "UR": {"x": -2.0, "y": 0.5},
+            "UL": {"x": -2.5, "y": 0.5}
+          }
+        }
+      ]
+    }
+  ],
+
+  "gateways": [
+    {
+      "loc1_ID": 1,
+      "loc2_ID" : 2,
+      "transition type": null
+    }
+  ]
+}

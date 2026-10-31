@@ -1,7 +1,7 @@
 import pygame
 
 from src.constants import SCREEN_HEIGHT, SCREEN_WIDTH
-from src.location import Location
+from src.location import Location, World
 from src.logger import log_event, log_state
 
 
@@ -12,6 +12,10 @@ def main():
     _ = pygame.init()
     clock = pygame.time.Clock()
     dt: float = 0.0
+
+    world = World("./resource/PQU_game_world.json")
+    world.load_world()
+    print(world.world_details)
 
     try:
         location = Location(1, "./resource/Location_1.png")

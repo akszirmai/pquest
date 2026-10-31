@@ -1,5 +1,7 @@
+import json
 import pygame
 from pygame.rect import Rect
+from typing import Any
 
 
 class Location:
@@ -9,7 +11,7 @@ class Location:
         self.loc_img_path = loc_img_path
         self.loc_img : pygame.Surface
         self.imagerect : Rect
-        print(f"Try loading image file from: {self.loc_img_path}")
+        print(f"Try loading image file from: {self.loc_img_path}")     ## Poossibly superfluous, since image path is stored in self.
 
         load_res : int = self.load_image(self.loc_img_path)
         if load_res != 0:
@@ -32,5 +34,15 @@ class Location:
         return 0
 
     def draw(self, screen : pygame.Surface) -> None:
-        pygame.draw.circle(screen, "red", pygame.Vector2(200, 200), 20*self.id, 3)
-        screen.blit(self.loc_img, self.imagerect)
+        _ = pygame.draw.circle(screen, "red", pygame.Vector2(200, 200), 20*self.id, 3)
+        _ = screen.blit(self.loc_img, self.imagerect)
+
+class World:
+
+    def __init__(self, world_desc_path: str):
+        self.world_desc_path = world_desc_path
+        self.world_details: dict[str, Any] = {}
+
+    def load_world(self):
+        with open(self.world_desc_path, 'r') as f:
+            self.world_details = json.load(f)
