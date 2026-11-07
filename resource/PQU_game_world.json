@@ -31,7 +31,7 @@
         "UR": {"x": -2.0, "y": 6.0},
         "UL": {"x": -8.0,"y": 6.0}
       },
-      "image name": "Location_1.png",
+      "image name": "Room_2.png",
       "exits": [
         {
           "exit_no": 1,

@@ -1,0 +1,97 @@
+= Setting up the development environment
+Akos Szirmai
+
+version: 0.2
+
+release date: 5 November 2026
+
+:toc:
+:sectnums:
+
+== Introduction
+
+This document describes the development environment which I've set up for the Personal Project of the Boot.dev's course. I wanted to establish a complete project with initiation, planning, execution and closure phases and to find the ideal tools for development and documentation also.
+After consulting with CoPilot, the following tools were selected:
+
+* uv - for virtual environment, which is needed because the project will rely on pygames, which need a specific version of python
+* git - for version control
+* GitHub - for version countrol Cloud repositpory
+* nvim - for editing simple files, including markdown
+* ZED - for editing source code and files more complex than a few lines
+* asciidoc - for editing nice-looking formatted documents, such as specifications, designs, etc.
+* PlantUML - for standalone UML diagrams
+* draw.io - for generic diagrams
+* Enterprise Architect - for complex UML and other similar models
+
+== Directory storage structure
+
+[source,text]
+----
+PQuest/
+├── .venv/
+├── .zed/
+├── src/
+├── tools/
+├── resource/
+├── tests/
+├── docs/
+│   ├── initiation/
+│   │   ├── generated/
+│   │   ├── PQU_dev_envir.adoc
+│   │   ├── idea_and_feasibility.adoc
+│   │   └── ...
+│   ├── design/
+│   │   ├── generated/
+│   │   ├── PQU_requirements.adoc
+│   │   ├── design.adoc
+│   │   └── ...
+│   └── development/
+│       ├── generated/
+│       ├── PQU_development.adoc
+│       └── ...
+├── README.md
+├── .gitignore
+
+└── ...
+----
+
+== Features
+
+
+== Setting up debugging in the ZED editor
+
+ZED supports Python debugging through the debugpy adapter.
+An initial setup of the debugging environment was needed the following command
+[source,text]
+----
+sudo apt install python3.14-venv
+----
+
+since for debugging ZED uses a virtual environment (This is independent from the usage of a virtual environment for the development itself.)
+This command was not enough, since in some mysterious way the debugpy adapter installation (occuring when ZED was installed) was broken, and for example missed a `bin/python` and `lib/` directories and their files. So, the complete Debugpy adapter was deleted by:
+[source,text]
+----
+rm -rf ~/.local/share/zed/debug_adapters/Debugpy
+----
+
+and ZED was closed and when it was started again, it rebuild automatically the needed debugpy directories and files.
+Afterwards, the debugger within ZED could be started with Ctrl+Shift+P  and `deugger: start`, and selecting the `run module ... <test.py>` option.
+
+And now came the tricky part. At this point, ZED debugging was using the system-wide python version, but for the PQU project, a different python version is needed (due to the `pygames` module), therefore the whole development is in a `.venv` virtual environment allowing Python 3.13 instead of 3.14. So, ZED should be told to use the project virtual environment's compiler instead of the system compiler.
+This can be done by defining a JSON configuration script for ZED debugging: `pquest/.zed/debug.json` with the following content:
+[source,text]
+----
+[
+  {
+    "label": "PyQuest Explicit Python",
+    "adapter": "Debugpy",
+    "request": "launch",
+    "program": "$ZED_FILE",
+    "cwd": "${ZED_WORKTREE_ROOT}",
+    "python": [
+      "/home/szirm/mystuff/workspace/python/pquest/.venv/bin/python"
+    ]
+  }
+]
+----
+If these installation and setting steps are taken, then the ZED editor offers a selector in the open tab's header line to select the appropriate Kernel for debugging and by selecting the proper Python 3.13 (uv) kernel, the pygame module also becomes aceessible.
