@@ -29,14 +29,6 @@ def main():
             crn_str += f"({pnt.x}, {pnt.y}) "
         print(f"ID: {loc.id}, imagefile: {loc.loc_img_path}, corner points:{crn_str}")
 
-#    try:
-#        location = Location(1, "./resource/Location_1.png")
-#        log_event("Location loaded")
-#    except ValueError as ex:
-#        print("Location is not created. Abort the program.")
-#        log_event(f"Location {1} loading failed")
-#        return
-
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     while True:
         log_state()
