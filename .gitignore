@@ -2,6 +2,7 @@
 *.html
 *.xmind
 *.png
+*.jsonl
 generated/
 
 # Byte-compiled / optimized files
