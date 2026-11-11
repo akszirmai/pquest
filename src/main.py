@@ -26,7 +26,7 @@ def main():
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-    player: Player = Player(100, 100)
+    player: Player = Player(200, 200)
     all_sprites.add(player)
 
 
@@ -36,6 +36,8 @@ def main():
             if event.type == pygame.QUIT:
                 return
 
+        player.update(dt)
+#        print(f"Position {player.position}")
         _ = screen.fill("black")
         location.draw(screen)
         all_sprites.draw(screen)
