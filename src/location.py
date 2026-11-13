@@ -9,6 +9,7 @@ class Location:
         self.loc_img_path = loc_img_path
         self.loc_img : pygame.Surface
         self.imagerect : Rect
+        self.cp_scr : list[tuple[int, int]]
         print(f"Try loading image file from: {self.loc_img_path}")
 
         load_res : int = self.load_image(self.loc_img_path)
@@ -29,8 +30,14 @@ class Location:
             print(message)
             return 2
         self.imagerect = self.loc_img.get_rect()
+        self.set_corner_points()
         return 0
+
+    def set_corner_points(self):
+        self.cp_scr = [(98, 855), (1846, 751), (1576, 410), (221, 472)]
 
     def draw(self, screen : pygame.Surface) -> None:
         pygame.draw.circle(screen, "red", pygame.Vector2(200, 200), 20*self.id, 3)
         screen.blit(self.loc_img, self.imagerect)
+        for cp in self.cp_scr:
+            pygame.draw.circle(screen, "green", pygame.Vector2(cp[0], cp[1]), 5, 2)

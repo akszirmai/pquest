@@ -30,18 +30,19 @@ class Player(Sprite):
 #        self.calc_scr_coords()
 
     def update(self, dt: float) -> None:
+        vert_mul = 0.25
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a]:
             self.move(pygame.Vector2(-dt, 0))
         if keys[pygame.K_d]:
             self.move(pygame.Vector2(dt, 0))
         if keys[pygame.K_w]:
-            self.move(pygame.Vector2(0, -dt))
+            self.move(pygame.Vector2(0, -dt*vert_mul))
         if keys[pygame.K_s]:
-            self.move(pygame.Vector2(0, dt))
+            self.move(pygame.Vector2(0, dt*vert_mul))
 
     def move(self, dirvect: pygame.Vector2) -> None:
-        self.position += dirvect * 50
+        self.position += dirvect * 100
         self.calc_scr_coords()
 #        print(f"Position {self.position}")
 
