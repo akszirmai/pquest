@@ -1,7 +1,7 @@
 import pygame
 
 from src.constants import SCREEN_HEIGHT, SCREEN_WIDTH
-from src.location import Location
+from src.location import Location, World
 from src.logger import log_event, log_state
 from src.player import Player
 
@@ -14,15 +14,22 @@ def main():
     clock = pygame.time.Clock()
     dt: float = 0.0
 
+    world = World("./resource/PQU_game_world.json")
+    world.load_world()
+    print(world.world_details)
+    print(" ")
     try:
-        location = Location(1, "./resource/Location_1.png")
-        log_event("Location loaded")
-    except ValueError as ex:
-        print("Location is not created. Abort the program.")
-        log_event(f"Location {1} loading failed")
+        world.process_read_world()
+    except (ValueError, KeyError) as ex:
+        print(f"{ex.args[0]} \nWorld loading FAILED !!! Program aborted")
         return
 
     all_sprites = pygame.sprite.Group()
+    for loc in world.locations:
+        crn_str: str = ""
+        for pnt in loc.corners:
+            crn_str += f"({pnt.x}, {pnt.y}) "
+        print(f"ID: {loc.id}, imagefile: {loc.loc_img_path}, corner points:{crn_str}")
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -39,8 +46,8 @@ def main():
         player.update(dt)
 #        print(f"Position {player.position}")
         _ = screen.fill("black")
-        location.draw(screen)
         all_sprites.draw(screen)
+        world.locations[1].draw(screen)
         pygame.display.flip()
 
         dt = clock.tick(60) / 1000   # regulates the running speed by passing the maximum frame-rate and the program will wait if needed.

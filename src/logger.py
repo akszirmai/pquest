@@ -16,8 +16,6 @@ _start_time = datetime.now()
 
 def log_state() -> None:
     global _frame_count, _state_log_initialized
-
-    print("logged state")
     if _frame_count > _FPS * _MAX_SECONDS:     # Stop logging after `_MAX_SECONDS` seconds. Later it might be modified
         return
 
