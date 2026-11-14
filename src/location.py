@@ -1,5 +1,5 @@
-from dataclasses import dataclass
 import json
+from dataclasses import dataclass
 from typing import Any
 
 import pygame
@@ -10,6 +10,7 @@ from src.constants import (
     LOC_IMAGE_LOAD_SUCCESS,
     LOC_IMAGE_NOT_FOUND,
 )
+
 
 @dataclass
 class Point:
@@ -26,6 +27,8 @@ class Location:
         self.imagerect : Rect
         self.cp_scr : list[tuple[int, int]]
         self.corners : list[Point] = []
+
+        self.set_corner_points()
 
 
     def load_image(self, img_file: str) -> int:
@@ -59,6 +62,7 @@ class Location:
         for cp in self.cp_scr:
             pygame.draw.circle(screen, "green", pygame.Vector2(cp[0], cp[1]), 5, 2)
 
+
 class World:
 
     def __init__(self, world_desc_path: str):
@@ -67,7 +71,7 @@ class World:
         self.locations : list[Location] = []
 
     def process_read_world(self):
-        print(self.world_details["locations"])
+#        print(self.world_details["locations"])
 
         for loc_data in self.world_details["locations"]:
             try:

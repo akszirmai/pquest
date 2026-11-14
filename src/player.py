@@ -44,7 +44,7 @@ class Player(Sprite):
     def move(self, dirvect: pygame.Vector2) -> None:
         self.position += dirvect * 100
         self.calc_scr_coords()
-#        print(f"Position {self.position}")
+
 
     def draw(self):
         print("WTF")
